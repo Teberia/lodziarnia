@@ -1,0 +1,24 @@
+services:
+  web:
+    build: .
+    container_name: php-apache
+    ports:
+      - "3000:80"
+    volumes:
+      - ./lodziarnia:/var/www/html
+    
+
+  db_lodziarnia:
+    image: mysql:8.0
+    container_name: db_lodziarnia
+    volumes:
+      - lodziarnia-mysql-data:/var/lib/mysql
+      - ./lodziarnia/lodziarnia.sql:/docker-entrypoint-initdb.d/lodziarnia.sql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: lodziarnia
+
+volumes:
+    lodziarnia-mysql-data:
