@@ -5,27 +5,20 @@ terraform {
       version = "~> 5.0"
     }
   }
-
   required_version = ">= 1.5.0"
 }
 
 provider "aws" {
     region = "eu-north-1"
-
 }
 
 
 resource "aws_instance" "app_server" {
   ami           = "ami-09a9858973b288bdd"
   instance_type = "t3.micro"
-
-  # Nazwa key pair z AWS
   key_name = "lodziarnia-key"
-
   vpc_security_group_ids = [aws_security_group.app_sg.id]
-
   associate_public_ip_address = true
-
   tags = {
     Name = "LodziarniaAppServer"
   }
@@ -34,7 +27,6 @@ resource "aws_instance" "app_server" {
 resource "aws_security_group" "app_sg" {
       name        = "lodziarnia-app-sg"
   description = "Security group for PHP application"
-
   ingress {
     description = "HTTP"
     from_port   = 80
@@ -42,7 +34,6 @@ resource "aws_security_group" "app_sg" {
     protocol    = "tcp"
     cidr_blocks = ["95.160.241.94/32"]
   }
-
   ingress {
     description = "SSH"
     from_port   = 22
@@ -50,15 +41,11 @@ resource "aws_security_group" "app_sg" {
     protocol    = "tcp"
     cidr_blocks = ["95.160.241.94/32"]
   }
-
-
   egress {
     description = "Allow all outbound traffic"
-
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-
     cidr_blocks = ["0.0.0.0/0"]
   }
 
