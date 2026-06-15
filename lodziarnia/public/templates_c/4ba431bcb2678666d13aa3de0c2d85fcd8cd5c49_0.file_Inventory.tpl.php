@@ -1,26 +1,27 @@
 <?php
-/* Smarty version 5.4.5, created on 2026-04-01 21:28:10
+/* Smarty version 5.4.5, created on 2026-05-10 13:54:10
   from 'file:Inventory.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.5',
-  'unifunc' => 'content_69cd8dea96e528_53749681',
+  'unifunc' => 'content_6a008e0292f285_49687432',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4ba431bcb2678666d13aa3de0c2d85fcd8cd5c49' => 
     array (
       0 => 'Inventory.tpl',
-      1 => 1768131258,
+      1 => 1778421213,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
+    'file:InventoryTable.tpl' => 1,
   ),
 ))) {
-function content_69cd8dea96e528_53749681 (\Smarty\Template $_smarty_tpl) {
+function content_6a008e0292f285_49687432 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = '/var/www/html/app/views';
 ?><!doctype html>
 <html lang="pl">
@@ -111,107 +112,110 @@ $foreach0DoElse = false;
 $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     <?php }?>
 
-    <!-- ===== tabela ===== -->
-    <div class="card shadow-sm">
-        <div class="card-body p-0">
-
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                <tr>
-                    <th>Nazwa smaku</th>
-                    <th>Dostępna ilość</th>
-                    <th>Status</th>
-                    <th class="text-end">Akcje</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <?php if ($_smarty_tpl->getSmarty()->getModifierCallback('count')($_smarty_tpl->getValue('items')) > 0) {?>
-                    <?php
-$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('items'), 'i');
-$foreach1DoElse = true;
-foreach ($_from ?? [] as $_smarty_tpl->getVariable('i')->value) {
-$foreach1DoElse = false;
-?>
-                        <tr>
-
-                            <td class="fw-semibold"><?php echo $_smarty_tpl->getValue('i')['nazwa'];?>
-</td>
-
-                            <td>
-                                <?php if ($_smarty_tpl->getValue('i')['dostepna_ilosc'] < 5) {?>
-                                    <span class="badge bg-danger">
-                                        <?php echo $_smarty_tpl->getValue('i')['dostepna_ilosc'];?>
- – niski stan
-                                    </span>
-                                <?php } else { ?>
-                                    <span class="badge bg-success">
-                                        <?php echo $_smarty_tpl->getValue('i')['dostepna_ilosc'];?>
-
-                                    </span>
-                                <?php }?>
-                            </td>
-
-                            <td>
-                                <?php if ($_smarty_tpl->getValue('i')['status'] == 'A') {?>
-                                    <span class="badge bg-success"> Aktywny </span>
-                                <?php } else { ?>
-                                    <span class="badge bg-secondary"> Wycofany </span>
-                                <?php }?>
-                            </td>
-
-
-                            <td class="text-end">
-                                <a href="<?php echo $_smarty_tpl->getValue('conf')->action_url;?>
-editInventory?&id=<?php echo $_smarty_tpl->getValue('i')['smak_id'];?>
-"
-                                   class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-
-                            <?php if ($_smarty_tpl->getValue('i')['status'] == 'A') {?>
-                                <a href="<?php echo $_smarty_tpl->getValue('conf')->action_url;?>
-deactivateInventory?id=<?php echo $_smarty_tpl->getValue('i')['smak_id'];?>
-"
-                                   class="btn btn-sm btn-outline-warning"title="Dezaktywuj">
-                                    <i class="bi bi-pause-circle"></i>
-                                </a>
-                            <?php } else { ?>
-                                <a href="<?php echo $_smarty_tpl->getValue('conf')->action_url;?>
-activateInventory?id=<?php echo $_smarty_tpl->getValue('i')['smak_id'];?>
-"
-                                   class="btn btn-sm btn-outline-success"title="Aktywuj">
-                                    <i class="bi bi-play-circle"></i>
-                                </a>
-                            <?php }?>
-                            <?php if ($_smarty_tpl->getValue('i')['status'] == 'N') {?>
-                                <a href="<?php echo $_smarty_tpl->getValue('conf')->action_url;?>
-deleteInventory?&id=<?php echo $_smarty_tpl->getValue('i')['smak_id'];?>
-"
-                                   class="btn btn-sm btn-outline-danger"
-                                   onclick="return confirm('Czy na pewno usunąć smak?')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            <?php }?>
-                            </td>
-                        </tr>
-                    <?php
-}
-$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
-                <?php } else { ?>
-                    <tr>
-                        <td colspan="4" class="text-center text-muted py-4">
-                            Brak smaków w magazynie
-                        </td>
-                    </tr>
-                <?php }?>
-                </tbody>
-            </table>
-
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <form id="inventorySearchForm" method="get" action="<?php echo $_smarty_tpl->getValue('conf')->action_url;?>
+inventory" class="row g-2 align-items-center">
+                <input type="hidden" name="ajax" value="0">
+                <div class="col-sm-5">
+                    <label class="form-label visually-hidden" for="searchQuery">Szukaj</label>
+                    <input id="searchQuery" name="q" type="search" class="form-control" placeholder="Szukaj po nazwie smaku" value="<?php echo htmlspecialchars((string)$_smarty_tpl->getValue('search'), ENT_QUOTES, 'UTF-8', true);?>
+">
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label visually-hidden" for="statusFilter">Status</label>
+                    <select id="statusFilter" name="status" class="form-select">
+                        <option value="">Wszystkie statusy</option>
+                        <option value="A"<?php if ($_smarty_tpl->getValue('status') == 'A') {?> selected<?php }?>>Aktywne</option>
+                        <option value="N"<?php if ($_smarty_tpl->getValue('status') == 'N') {?> selected<?php }?>>Wycofane</option>
+                    </select>
+                </div>
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Szukaj
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
+    <div id="inventoryContent">
+        <?php $_smarty_tpl->renderSubTemplate('file:InventoryTable.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+?>
+    </div>
+
 </div>
+
+<?php echo '<script'; ?>
+>
+    (function() {
+        const form = document.getElementById('inventorySearchForm');
+        const content = document.getElementById('inventoryContent');
+
+        function buildUrl(params) {
+            const url = new URL(form.action, window.location.href);
+            Object.keys(params).forEach(key => {
+                if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+                    url.searchParams.set(key, params[key]);
+                } else {
+                    url.searchParams.delete(key);
+                }
+            });
+            return url.toString();
+        }
+
+        function loadInventory(url) {
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Błąd sieci');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    content.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const params = {
+                ajax: '1',
+                q: formData.get('q') || '',
+                status: formData.get('status') || '',
+                page: 1
+            };
+            const url = buildUrl(params);
+            loadInventory(url);
+            history.replaceState(null, '', buildUrl({
+                q: params.q,
+                status: params.status,
+                page: params.page
+            }));
+        });
+
+        content.addEventListener('click', function(event) {
+            const target = event.target.closest('.page-link-js');
+            if (!target) {
+                return;
+            }
+            event.preventDefault();
+            loadInventory(target.href);
+            const url = new URL(target.href, window.location.href);
+            url.searchParams.delete('ajax');
+            history.replaceState(null, '', url.toString());
+        });
+    })();
+<?php echo '</script'; ?>
+>
 
 <?php echo '<script'; ?>
  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"><?php echo '</script'; ?>
