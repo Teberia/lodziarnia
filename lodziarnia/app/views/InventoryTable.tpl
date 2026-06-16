@@ -7,7 +7,7 @@
                 <th>Nazwa smaku</th>
                 <th>Dostępna ilość</th>
                 <th>Status</th>
-                <th class="text-end">Akcje</th>
+                {if in_array('produkcja', $roles)}<th class="text-end">Akcje</th>{/if}
             </tr>
             </thead>
 
@@ -31,6 +31,7 @@
                             {/if}
                         </td>
                         <td class="text-end">
+                            {if in_array('produkcja', $roles)}
                             <a href="{$conf->action_url}editInventory?&id={$i.smak_id}" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-pencil"></i>
                             </a>
@@ -49,6 +50,7 @@
                                 <a href="{$conf->action_url}deleteInventory?&id={$i.smak_id}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Czy na pewno usunąć smak?')">
                                     <i class="bi bi-trash"></i>
                                 </a>
+                            {/if}
                             {/if}
                         </td>
                     </tr>

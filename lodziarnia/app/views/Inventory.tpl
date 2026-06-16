@@ -58,16 +58,18 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="bi bi-box"></i> Magazyn </h2>
 
+        {if in_array('produkcja', $roles)}
           <a href="{$conf->action_url}addInventory"
               class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Dodaj nowy smak
-        </a>
+          </a>
+        {/if}
     </div>
 
 
     {if $msgs->isMessage()}
         {foreach $msgs->getMessages() as $msg}
-            <div class="alert alert-{if $msg->type==3}danger{else}success{/if}">
+            <div class="alert alert-{if $msg->type==2}danger{else}success{/if}">
                 {$msg->text}
             </div>
         {/foreach}

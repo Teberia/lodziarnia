@@ -36,12 +36,12 @@ Utils::addRoute('welcome', 'WelcomeCtrl');
 
 // Panel do zarządzania magazynem;
 Utils::addRoute('inventory', 'InventoryCtrl', ['produkcja', 'manager']);
-Utils::addRoute('addInventory', 'InventoryCtrl', ['produkcja', 'manager']);
-Utils::addRoute('editInventory', 'InventoryCtrl', ['produkcja', 'manager']);
-Utils::addRoute('saveInventory', 'InventoryCtrl', ['produkcja', 'manager']);
-Utils::addRoute('deleteInventory', 'InventoryCtrl', ['produkcja', 'manager']);
-Utils::addRoute('deactivateInventory', 'InventoryCtrl', ['produkcja', 'manager']);
-Utils::addRoute('activateInventory', 'InventoryCtrl', ['produkcja', 'manager']);
+Utils::addRoute('addInventory', 'InventoryCtrl', ['produkcja']);
+Utils::addRoute('editInventory', 'InventoryCtrl', ['produkcja']);
+Utils::addRoute('saveInventory', 'InventoryCtrl', ['produkcja']);
+Utils::addRoute('deleteInventory', 'InventoryCtrl', ['produkcja']);
+Utils::addRoute('deactivateInventory', 'InventoryCtrl', ['produkcja']);
+Utils::addRoute('activateInventory', 'InventoryCtrl', ['produkcja']);
 
 // Panel do zarządzania zamowieniami - TODO;
 // Panel do raportów - TODO;
