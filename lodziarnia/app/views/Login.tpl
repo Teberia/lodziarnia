@@ -37,7 +37,7 @@
                 <div class="alert alert-danger">
                     <ul class="mb-0">
                         {foreach $msgs->getMessages() as $msg}
-                            {if $msg->type == 3}
+                            {if $msg->type == 2}
                                 <li>{$msg->text}</li>
                             {/if}
                         {/foreach}
@@ -49,7 +49,7 @@
                 <div class="alert alert-success">
                     <ul class="mb-0">
                         {foreach $msgs->getMessages() as $msg}
-                            {if $msg->type == 1}
+                            {if $msg->type == 0}
                                 <li>{$msg->text}</li>
                             {/if}
                         {/foreach}

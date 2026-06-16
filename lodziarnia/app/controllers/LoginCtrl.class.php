@@ -25,6 +25,13 @@ class LoginCtrl
             }
             $db = App::getDB();
             $user = $db->get("uzytkownicy", "*", ["login" => $username]);
+            if ($user && ($user['status_konta'] ?? '') !== 'A') {
+                App::getMessages()->addMessage(
+                    new Message("Konto jest nieaktywne", Message::ERROR)
+                );
+                App::getSmarty()->display("Login.tpl");
+                return;
+            }
             if (
                 $user &&
                 isset($user["haslo_hash"]) &&
