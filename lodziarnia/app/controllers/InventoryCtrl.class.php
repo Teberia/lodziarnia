@@ -11,10 +11,58 @@ class InventoryCtrl {
     public function action_inventory() {
 
         $db = App::getDB();
-        $items = $db->select('smaki', ['smak_id', 'nazwa', 'dostepna_ilosc', 'status']);
+
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $search = trim($_GET['q'] ?? '');
+        $status = trim($_GET['status'] ?? '');
+
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+
+        $conditions = [];
+        if ($search !== '') {
+            $conditions['nazwa[~]'] = "%{$search}%";
+        }
+        if ($status !== '' && in_array($status, ['A', 'N'], true)) {
+            $conditions['status'] = $status;
+        }
+
+        $totalRows = $db->count('smaki', '*', $conditions ?: null);
+        $pages = max(1, (int)ceil($totalRows / $limit));
+
+        if ($page > $pages) {
+            $page = $pages;
+            $offset = ($page - 1) * $limit;
+        }
+
+        $conditions['ORDER'] = ['nazwa' => 'ASC'];
+        $conditions['LIMIT'] = [$offset, $limit];
+
+        $items = $db->select('smaki', ['smak_id', 'nazwa', 'dostepna_ilosc', 'status'], $conditions);
+
+        $pageFrom = $totalRows > 0 ? $offset + 1 : 0;
+        $pageTo = min($offset + $limit, $totalRows);
+        $pageNumbers = range(1, $pages);
 
         App::getSmarty()->assign('items', $items);
-        App::getSmarty()->display('Inventory.tpl');
+        App::getSmarty()->assign('search', $search);
+        App::getSmarty()->assign('status', $status);
+        App::getSmarty()->assign('page', $page);
+        App::getSmarty()->assign('pages', $pages);
+        App::getSmarty()->assign('pageFrom', $pageFrom);
+        App::getSmarty()->assign('pageTo', $pageTo);
+        App::getSmarty()->assign('totalRows', $totalRows);
+        App::getSmarty()->assign('pageNumbers', $pageNumbers);
+
+        if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
+            App::getSmarty()->display('InventoryTable.tpl');
+        } else {
+            App::getSmarty()->display('Inventory.tpl');
+        }
     }
 
     public function action_editInventory() {

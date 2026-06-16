@@ -3,3 +3,11 @@
 
 .DS_Store
 .log
+
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+
+*.pem
+
