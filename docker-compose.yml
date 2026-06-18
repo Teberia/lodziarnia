@@ -14,8 +14,6 @@ services:
     volumes:
       - lodziarnia-mysql-data:/var/lib/mysql
       - ./lodziarnia/lodziarnia.sql:/docker-entrypoint-initdb.d/lodziarnia.sql
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: lodziarnia
