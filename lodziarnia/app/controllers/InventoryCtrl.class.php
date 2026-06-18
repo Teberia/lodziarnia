@@ -5,6 +5,7 @@ namespace app\controllers;
 use core\App;
 use core\Message;
 use core\RoleUtils;
+use core\SessionUtils;
 
 class InventoryCtrl {
 
@@ -57,6 +58,7 @@ class InventoryCtrl {
         App::getSmarty()->assign('pageTo', $pageTo);
         App::getSmarty()->assign('totalRows', $totalRows);
         App::getSmarty()->assign('pageNumbers', $pageNumbers);
+        App::getSmarty()->assign('roles', SessionUtils::load('user_roles', true));
 
         if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
             App::getSmarty()->display('InventoryTable.tpl');
