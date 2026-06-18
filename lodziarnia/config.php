@@ -2,7 +2,7 @@
 $conf->debug = true; # set true during development and use in your code (for instance check if true to send additional message)
 
 # ---- Webapp location
-$conf->server_name = 'localhost:3000';   # server address and port
+$conf->server_name = $_SERVER['HTTP_HOST'];   # server address and port
 $conf->protocol = 'http';           # http or https
 $conf->app_root = '';   # project subfolder in domain (relative to main domain)
 
