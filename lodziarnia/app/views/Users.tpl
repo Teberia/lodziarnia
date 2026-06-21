@@ -72,7 +72,7 @@
 
         <a href="{url action='editUser'}"
            class="btn btn-primary">
-            <i class="bi bi-person-plus"></i> Dodaj nowego użytkownika
+            <i class="bi bi-person-plus"></i> Dodaj nowego użytkownikaa
         </a>
     </div>
 
