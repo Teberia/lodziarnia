@@ -15,7 +15,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container-fluid">
 
-        <span class="navbar-brand fw-bold">🍦 Frosty Manager</span>
+        <span class="navbar-brand fw-bold">🍦 Frosty Manager!</span>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
             <span class="navbar-toggler-icon"></span>
