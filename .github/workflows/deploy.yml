@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  deploy:
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +23,12 @@ jobs:
         run: |
           find . -name "*.php" -exec php -l {} \;
 
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
       - name: Deploy app on EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
